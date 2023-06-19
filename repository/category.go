@@ -32,7 +32,7 @@ func (c *categoryRepository) Store(Category *model.Category) error {
 }
 
 func (c *categoryRepository) Update(id int, category model.Category) error {
-	err := c.db.Where("id = ?", id).Update("name", category.Name).Error
+	err := c.db.Model(&model.Category{}).Where("id = ?", id).Update("name", category.Name).Error
 
 	return err
 }
@@ -55,7 +55,7 @@ func (c *categoryRepository) GetByID(id int) (*model.Category, error) {
 
 func (c *categoryRepository) GetList() ([]model.Category, error) {
 	categories := []model.Category{}
-	err := c.db.Scan(&categories).Error
+	err := c.db.Model(&model.Category{}).Scan(&categories).Error
 
 	return categories, err
 }
