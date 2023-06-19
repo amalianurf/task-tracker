@@ -4,7 +4,7 @@ import "os"
 
 var (
 	// BaseURL is the base url of the server
-	BaseURL = os.Getenv("RAILWAY_STATIC_URL")
+	BaseURL = os.Getenv("BASE_URL")
 )
 
 func SetUrl(url string) string {
