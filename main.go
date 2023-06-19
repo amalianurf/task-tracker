@@ -12,6 +12,7 @@ import (
 	"embed"
 	"fmt"
 	"net/http"
+	"os"
 	"sync"
 	"time"
 
@@ -80,8 +81,13 @@ func main() {
 		router = RunServer(conn, router)
 		router = RunClient(conn, router, Resources)
 
-		fmt.Println("Server is running on port 8080")
-		err = router.Run(":8080")
+		port := os.Getenv("PORT")
+		if port == "" {
+			port = "8080"
+		}
+
+		fmt.Println("Server is running on port " + port)
+		err = router.Run(":" + port)
 		if err != nil {
 			panic(err)
 		}
