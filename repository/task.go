@@ -33,7 +33,7 @@ func (t *taskRepository) Store(task *model.Task) error {
 }
 
 func (t *taskRepository) Update(id int, task *model.Task) error {
-	err := t.db.Table("tasks").Where("id = ?", id).Updates(map[string]interface{}{
+	err := t.db.Where("id = ?", id).Updates(map[string]interface{}{
 		"title":       task.Title,
 		"deadline":    task.Deadline,
 		"priority":    task.Priority,
@@ -63,14 +63,14 @@ func (t *taskRepository) GetByID(id int) (*model.Task, error) {
 
 func (t *taskRepository) GetList() ([]model.Task, error) {
 	tasks := []model.Task{}
-	err := t.db.Table("tasks").Scan(&tasks).Error
+	err := t.db.Scan(&tasks).Error
 
 	return tasks, err
 }
 
 func (t *taskRepository) GetTaskCategory(id int) ([]model.TaskCategory, error) {
 	taskCategory := []model.TaskCategory{}
-	err := t.db.Table("tasks").Where("tasks.id = ?", id).Select("tasks.id AS id, tasks.title AS title, categories.name AS category").Joins("LEFT JOIN categories ON categories.id = tasks.category_id").Scan(&taskCategory).Error
+	err := t.db.Where("tasks.id = ?", id).Select("tasks.id AS id, tasks.title AS title, categories.name AS category").Joins("LEFT JOIN categories ON categories.id = tasks.category_id").Scan(&taskCategory).Error
 
 	return taskCategory, err
 }

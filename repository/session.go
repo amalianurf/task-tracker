@@ -37,7 +37,7 @@ func (u *sessionsRepo) DeleteSession(token string) error {
 }
 
 func (u *sessionsRepo) UpdateSessions(session model.Session) error {
-	err := u.db.Table("sessions").Where("email = ?", session.Email).Updates(map[string]interface{}{
+	err := u.db.Where("email = ?", session.Email).Updates(map[string]interface{}{
 		"token":  session.Token,
 		"email":  session.Email,
 		"expiry": session.Expiry,
@@ -48,14 +48,14 @@ func (u *sessionsRepo) UpdateSessions(session model.Session) error {
 
 func (u *sessionsRepo) SessionAvailEmail(email string) (model.Session, error) {
 	session := model.Session{}
-	err := u.db.Table("sessions").Where("email = ?", email).First(&session).Error
+	err := u.db.Where("email = ?", email).First(&session).Error
 
 	return session, err
 }
 
 func (u *sessionsRepo) SessionAvailToken(token string) (model.Session, error) {
 	session := model.Session{}
-	err := u.db.Table("sessions").Where("token = ?", token).First(&session).Error
+	err := u.db.Where("token = ?", token).First(&session).Error
 
 	return session, err
 }
