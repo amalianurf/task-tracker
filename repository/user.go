@@ -22,7 +22,7 @@ func NewUserRepo(db *gorm.DB) *userRepository {
 
 func (r *userRepository) GetUserByEmail(email string) (model.User, error) {
 	user := model.User{}
-	r.db.Model(model.User{}).Where("email = ?", email).First(&user)
+	r.db.Table("users").Where("email = ?", email).First(&user)
 
 	return user, nil
 }

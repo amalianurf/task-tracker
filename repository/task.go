@@ -33,7 +33,7 @@ func (t *taskRepository) Store(task *model.Task) error {
 }
 
 func (t *taskRepository) Update(id int, task *model.Task) error {
-	err := t.db.Model(&model.Task{}).Where("id = ?", id).Updates(map[string]interface{}{
+	err := t.db.Table("tasks").Where("id = ?", id).Updates(map[string]interface{}{
 		"title":       task.Title,
 		"deadline":    task.Deadline,
 		"priority":    task.Priority,
@@ -63,7 +63,7 @@ func (t *taskRepository) GetByID(id int) (*model.Task, error) {
 
 func (t *taskRepository) GetList() ([]model.Task, error) {
 	tasks := []model.Task{}
-	err := t.db.Model(&model.Task{}).Scan(&tasks).Error
+	err := t.db.Table("tasks").Scan(&tasks).Error
 
 	return tasks, err
 }

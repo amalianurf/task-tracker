@@ -8,7 +8,7 @@ var (
 )
 
 func SetUrl(url string) string {
-	if BaseURL == "" {
+	if os.Getenv("RAILWAY_STATIC_URL") == "" {
 		BaseURL = "http://localhost:8080"
 	}
 
